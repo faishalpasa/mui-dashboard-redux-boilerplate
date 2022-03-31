@@ -2,42 +2,46 @@ import React, { useState } from 'react'
 import {
   AppBar,
   Box,
+  Divider,
+  Drawer,
   IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
 } from '@mui/material'
-import { Menu as MenuIcon, AccountCircle } from '@mui/icons-material'
+import {
+  AccountCircle as AccountIcon,
+  Mail as MailIcon,
+  MoveToInbox as InboxIcon,
+} from '@mui/icons-material'
+
+const APPBAR_HEIGHT = 64
+const DRAWER_WIDTH = 240
 
 interface Layout {
   children: React.ReactNode
 }
 
 const LayoutView = ({ children }: Layout) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [anchorMenuEl, setAnchorMenuEl] = useState<null | HTMLElement>(null)
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
+  const handleToggleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorMenuEl(event.currentTarget)
   }
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleCloseMenu = () => {
+    setAnchorMenuEl(null)
   }
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
+            Admin
           </Typography>
           <Box>
             <IconButton
@@ -46,13 +50,13 @@ const LayoutView = ({ children }: Layout) => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               color="inherit"
-              onClick={handleMenu}
+              onClick={handleToggleMenu}
             >
-              <AccountCircle />
+              <AccountIcon />
             </IconButton>
             <Menu
               id="menu-appbar"
-              anchorEl={anchorEl}
+              anchorEl={anchorMenuEl}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -62,16 +66,53 @@ const LayoutView = ({ children }: Layout) => {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
+              open={Boolean(anchorMenuEl)}
+              onClose={handleCloseMenu}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+              <MenuItem onClick={handleCloseMenu}>Logout</MenuItem>
             </Menu>
           </Box>
         </Toolbar>
       </AppBar>
-      {children}
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: DRAWER_WIDTH,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': { width: DRAWER_WIDTH, boxSizing: 'border-box' },
+        }}
+      >
+        <Toolbar />
+        <Box sx={{ overflow: 'auto' }}>
+          <List>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, pt: `${APPBAR_HEIGHT}px`, pl: `${DRAWER_WIDTH}px` }}>
+        <Box p={2}>
+          {children}
+        </Box>
+      </Box>
     </Box>
   )
 }

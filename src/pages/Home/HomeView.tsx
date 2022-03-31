@@ -1,9 +1,24 @@
 import React from 'react'
+import { Box } from '@mui/material'
+
+import Breadcrumbs from 'components/Breadcrumbs'
+
+const breadcrumbs = [
+  {
+    name: 'Dashboard',
+    link: '/',
+  },
+  {
+    name: 'Home',
+    link: '/',
+  },
+]
 
 const HomeView = () => (
-  <div>
+  <Box>
+    <Breadcrumbs items={breadcrumbs} />
     Home
-  </div>
+  </Box>
 )
 
 export default HomeView
