@@ -1,5 +1,8 @@
 import React from 'react'
-import { Box } from '@mui/material'
+import {
+  Box, Paper, Typography,
+} from '@mui/material'
+import styled from 'styled-components'
 
 import Breadcrumbs from 'components/Breadcrumbs'
 
@@ -14,10 +17,20 @@ const breadcrumbs = [
   },
 ]
 
+const StyledPaper = styled(Paper)`
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+`
+
 const HomeView = () => (
-  <Box>
+  <Box display="flex" flexDirection="column" height="100%" gap={2}>
     <Breadcrumbs items={breadcrumbs} />
-    Home
+    <StyledPaper elevation={1}>
+      <Typography variant="h5" component="h2">
+        Home
+      </Typography>
+    </StyledPaper>
   </Box>
 )
 

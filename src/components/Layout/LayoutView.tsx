@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   AppBar,
+  Avatar,
   Box,
   Divider,
   Drawer,
@@ -15,10 +16,18 @@ import {
   Typography,
 } from '@mui/material'
 import {
-  AccountCircle as AccountIcon,
+  AccountCircle as AccountCircleIcon,
+  Settings as SettingIcon,
   Mail as MailIcon,
+  Logout as LogoutIcon,
   MoveToInbox as InboxIcon,
+  Brightness4 as Brightness4Icon,
+  Brightness7 as Brightness7Icon,
 } from '@mui/icons-material'
+
+import { AppContext } from 'App'
+import Snackbar from 'components/Snackbar'
+import { acronym } from 'utils/string'
 
 const APPBAR_HEIGHT = 64
 const DRAWER_WIDTH = 240
@@ -28,7 +37,11 @@ interface Layout {
 }
 
 const LayoutView = ({ children }: Layout) => {
+  const { themeContext, snackbarContext } = useContext(AppContext)
   const [anchorMenuEl, setAnchorMenuEl] = useState<null | HTMLElement>(null)
+
+  const { themeColor, handleToggleThemeColor } = themeContext
+  const { isOpen: isSnackbarOpen, handleSnackbarOpen } = snackbarContext
 
   const handleToggleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorMenuEl(event.currentTarget)
@@ -36,6 +49,7 @@ const LayoutView = ({ children }: Layout) => {
   const handleCloseMenu = () => {
     setAnchorMenuEl(null)
   }
+
   return (
     <Box>
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -44,6 +58,9 @@ const LayoutView = ({ children }: Layout) => {
             Admin
           </Typography>
           <Box>
+            <IconButton onClick={handleToggleThemeColor} color="inherit">
+              {themeColor === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -52,25 +69,68 @@ const LayoutView = ({ children }: Layout) => {
               color="inherit"
               onClick={handleToggleMenu}
             >
-              <AccountIcon />
+              <Avatar sx={{ width: 32, height: 32 }}>{acronym('Muhammad Faishal Pasa')}</Avatar>
             </IconButton>
             <Menu
               id="menu-appbar"
               anchorEl={anchorMenuEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  minWidth: 200,
+                  '&:before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    right: 23,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                  },
+                },
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
               open={Boolean(anchorMenuEl)}
               onClose={handleCloseMenu}
             >
-              <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
-              <MenuItem onClick={handleCloseMenu}>Logout</MenuItem>
+              <MenuItem>
+                <Box display="flex" flexDirection="column">
+                  <Typography>Muhammad Faishal Pasa</Typography>
+                  <Typography variant="caption">Admin</Typography>
+                </Box>
+              </MenuItem>
+              <MenuItem>
+                <ListItemIcon>
+                  <AccountCircleIcon fontSize="small" />
+                </ListItemIcon>
+                <Typography variant="body2">Profile</Typography>
+              </MenuItem>
+              <Divider />
+              <MenuItem>
+                <ListItemIcon>
+                  <SettingIcon fontSize="small" />
+                </ListItemIcon>
+                <Typography variant="body2">Settings</Typography>
+              </MenuItem>
+              <MenuItem>
+                <ListItemIcon>
+                  <LogoutIcon fontSize="small" />
+                </ListItemIcon>
+                <Typography variant="body2">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
@@ -81,6 +141,9 @@ const LayoutView = ({ children }: Layout) => {
           width: DRAWER_WIDTH,
           flexShrink: 0,
           '& .MuiDrawer-paper': { width: DRAWER_WIDTH, boxSizing: 'border-box' },
+        }}
+        PaperProps={{
+          elevation: 1,
         }}
       >
         <Toolbar />
@@ -108,11 +171,21 @@ const LayoutView = ({ children }: Layout) => {
           </List>
         </Box>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, pt: `${APPBAR_HEIGHT}px`, pl: `${DRAWER_WIDTH}px` }}>
-        <Box p={2}>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          pt: `${APPBAR_HEIGHT}px`,
+          pl: `${DRAWER_WIDTH}px`,
+          height: '100vh',
+          backgroundColor: (theme) => theme.palette.background.default,
+        }}
+      >
+        <Box p={2} height="100%">
           {children}
         </Box>
       </Box>
+      <Snackbar isOpen={isSnackbarOpen} message="Some message" isAutohide onClose={() => handleSnackbarOpen(false)} />
     </Box>
   )
 }

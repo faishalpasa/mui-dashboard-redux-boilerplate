@@ -1,5 +1,12 @@
 import { createTheme } from '@mui/material/styles'
+// import { red } from '@mui/material/colors'
 
-const theme = createTheme({})
+const original = createTheme()
 
-export default theme
+export const lightTheme = {
+  ...original,
+}
+
+export const darkTheme = {
+  ...original,
+}
