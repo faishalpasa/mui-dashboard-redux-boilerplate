@@ -1,5 +1,5 @@
 import React, {
-// lazy,
+  lazy,
   Suspense,
 } from 'react'
 import {
@@ -10,8 +10,8 @@ import LoadingOverlay from 'components/LoadingOverlay'
 import Home from 'pages/Home'
 import NotFound from 'pages/NotFound'
 
-// Dynamically import routes here
-// const Home = lazy(() => import('routes/Home'))
+const Form = lazy(() => import('pages/Form'))
+const Table = lazy(() => import('pages/Table'))
 
 interface Page {
   element: RouteProps['element']
@@ -31,6 +31,16 @@ const pages: Page[] = [
   {
     path: '/',
     element: <Home />,
+    isPublic: true,
+  },
+  {
+    path: '/form',
+    element: <Form />,
+    isPublic: true,
+  },
+  {
+    path: '/table',
+    element: <Table />,
     isPublic: true,
   },
   {

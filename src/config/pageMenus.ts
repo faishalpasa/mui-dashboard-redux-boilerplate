@@ -2,7 +2,7 @@ import { SvgIcon } from '@mui/material/'
 import { Dashboard, Create, TableView } from '@mui/icons-material'
 
 export type PageMenu = {
-  icon?: typeof SvgIcon
+  icon: typeof SvgIcon
   id: string
   isExternal?: boolean // optional, redirect to external link
   name: string
