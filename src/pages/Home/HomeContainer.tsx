@@ -1,18 +1,19 @@
 import React, { useEffect, useContext } from 'react'
 
-import { AppContext } from 'App'
+import { snackbarOpenSet } from 'store/actions/snackbarAction'
+import { StateContext } from 'store/StoreProvider'
 
 import HomeView from './HomeView'
 
 const HomeContainer = () => {
-  const { snackbarContext } = useContext(AppContext)
-  const { isOpen, handleSnackbarOpen } = snackbarContext
+  const { state, dispatch } = useContext(StateContext)
+  const { snackbar: { isOpen } } = state
 
   useEffect(() => {
     if (!isOpen) {
-      handleSnackbarOpen(true)
+      dispatch(snackbarOpenSet(true))
     }
-  }, [])
+  }, [dispatch])
 
   return <HomeView />
 }

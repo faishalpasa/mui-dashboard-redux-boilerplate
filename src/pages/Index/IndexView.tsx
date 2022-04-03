@@ -2,10 +2,13 @@ import React, {
 // lazy,
   Suspense,
 } from 'react'
-import { Routes, Route, RouteProps } from 'react-router-dom'
+import {
+  Routes, Route, RouteProps,
+} from 'react-router-dom'
 
 import LoadingOverlay from 'components/LoadingOverlay'
 import Home from 'pages/Home'
+import NotFound from 'pages/NotFound'
 
 // Dynamically import routes here
 // const Home = lazy(() => import('routes/Home'))
@@ -30,9 +33,27 @@ const pages: Page[] = [
     element: <Home />,
     isPublic: true,
   },
+  {
+    path: '*',
+    element: <NotFound />,
+    isExact: false,
+  },
 ]
 
+// const ProtectedRoutes = ({ isAuthenticated, ...rest }: PageRouteProps) => {
+//   if (!isAuthenticated) {
+//     return null
+//   }
+
+//   return <Route {...rest} />
+// }
+
 const RoutesView = () => {
+  // const { isAuthenticated, isLoading } = useSelector(selectRoutesData, shallowEqual)
+
+  // if (isLoading) {
+  //   return <LoadingOverlay />
+  // }
   const renderRoutes = ({
     element, path, isExact, isPublic,
   }: Page) => {
@@ -42,6 +63,11 @@ const RoutesView = () => {
       exact: isExact ?? true,
       isPublic,
     }
+
+    // if (!isPublic) {
+    //   props.isAuthenticated = isAuthenticated
+    //   return <ProtectedRoutes key={path} {...props} />
+    // }
 
     return <Route key={path} {...props} />
   }
