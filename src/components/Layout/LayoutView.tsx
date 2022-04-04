@@ -10,7 +10,7 @@ import { DRAWER_WIDTH, APPBAR_HEIGHT, BOTTOM_NAVIGATION_HEIGHT } from 'constants
 
 import AppBar from './AppBar'
 import BottomNavigation from './BottomNavigation'
-import SideMenu from './SideMenu'
+import Drawer from './Drawer'
 
 interface Layout {
   children: React.ReactNode
@@ -28,9 +28,7 @@ const LayoutView = ({
   <ThemeProvider theme={muiTheme}>
     <Box>
       <AppBar />
-
-      <SideMenu />
-
+      <Drawer />
       <Box
         component="main"
         sx={{
@@ -52,9 +50,7 @@ const LayoutView = ({
           {children}
         </Box>
       </Box>
-
       <BottomNavigation />
-
       <Snackbar isOpen={isSnackbarOpen} message="Some message" isAutohide onClose={() => handleSnackbarOpen(false)} />
     </Box>
   </ThemeProvider>

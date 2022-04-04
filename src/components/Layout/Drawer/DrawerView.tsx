@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { pageMenus } from 'config/pageMenus'
 import { DRAWER_WIDTH } from 'constants/layout'
 
-const SideMenuView = () => {
+const DrawerView = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -76,4 +76,4 @@ const SideMenuView = () => {
   )
 }
 
-export default SideMenuView
+export default DrawerView
