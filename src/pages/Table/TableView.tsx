@@ -3,7 +3,13 @@ import {
   Box,
   Paper,
   Typography,
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
 } from '@mui/material'
 import styled from 'styled-components'
 
@@ -62,12 +68,12 @@ interface Data {
   density: number;
 }
 
-function createData(
+const createData = (
   name: string,
   code: string,
   population: number,
   size: number,
-): Data {
+): Data => {
   const density = population / size
   return {
     name, code, population, size, density,
@@ -118,23 +124,22 @@ const TableView = () => {
           Form
         </Typography>
         <Box sx={{ width: '100%' }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer
+            sx={{
+              maxHeight: {
+                xs: 'calc(100vh - 200px)',
+                sm: '400px',
+              },
+            }}
+          >
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
-                <TableRow>
-                  <TableCell align="center" colSpan={2}>
-                    Country
-                  </TableCell>
-                  <TableCell align="center" colSpan={3}>
-                    Details
-                  </TableCell>
-                </TableRow>
                 <TableRow>
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ top: 57, minWidth: column.minWidth }}
+                      style={{ minWidth: column.minWidth }}
                     >
                       {column.label}
                     </TableCell>

@@ -1,7 +1,8 @@
 import React, { useReducer, useMemo, createContext } from 'react'
 import rootReducer from './rootReducer'
 import rootState, { RootState } from './rootState'
-import { RootAction } from './rootAction'
+
+import type { RootAction } from './rootAction'
 
 export const StateContext = createContext<{
   state: RootState
