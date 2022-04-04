@@ -1,10 +1,9 @@
 import React, { memo } from 'react'
-import {
-  Box,
-} from '@mui/material'
+import { Box } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 
 import type { Theme } from '@mui/material/styles'
+
 import Snackbar from 'components/Snackbar'
 import { DRAWER_WIDTH, APPBAR_HEIGHT, BOTTOM_NAVIGATION_HEIGHT } from 'constants/layout'
 

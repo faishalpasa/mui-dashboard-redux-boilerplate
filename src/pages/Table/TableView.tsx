@@ -14,6 +14,7 @@ import {
 import styled from 'styled-components'
 
 import Breadcrumbs from 'components/Breadcrumbs'
+import { APPBAR_HEIGHT } from 'constants/layout'
 
 const breadcrumbs = [
   {
@@ -121,14 +122,14 @@ const TableView = () => {
       <Breadcrumbs items={breadcrumbs} />
       <StyledPaper elevation={1}>
         <Typography variant="h5" component="h2">
-          Form
+          Table
         </Typography>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%', margin: '1rem 0' }}>
           <TableContainer
             sx={{
               maxHeight: {
-                xs: 'calc(100vh - 200px)',
-                sm: '400px',
+                xs: `calc(100vh - ${APPBAR_HEIGHT * 5}px - 2rem)`,
+                sm: `calc(100vh - ${APPBAR_HEIGHT * 4}px - 2rem)`,
               },
             }}
           >
