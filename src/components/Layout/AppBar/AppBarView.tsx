@@ -18,6 +18,7 @@ import {
   Brightness4 as Brightness4Icon,
   Brightness7 as Brightness7Icon,
 } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
 
 import config from 'config'
 import useDispatchContext from 'hooks/useDistpatchContext'
@@ -29,6 +30,7 @@ import { setItem } from 'utils/localStorage'
 const AppBarView = () => {
   const [anchorMenuEl, setAnchorMenuEl] = useState<null | HTMLElement>(null)
   const dispatch = useDispatchContext()
+  const navigate = useNavigate()
   const { app } = useStateContext()
 
   const { theme: themeColor } = app
@@ -46,9 +48,11 @@ const AppBarView = () => {
   return (
     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {config.appName}
-        </Typography>
+        <Box flex={1}>
+          <Typography variant="h6" onClick={() => navigate('/')} sx={{ display: 'inline-block', cursor: 'pointer' }}>
+            {config.appName}
+          </Typography>
+        </Box>
         <Box>
           <IconButton onClick={handleThemeColorToggle} color="inherit">
             {themeColor === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
