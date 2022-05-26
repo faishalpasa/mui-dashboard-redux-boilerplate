@@ -11,17 +11,20 @@ import AppBar from './AppBar'
 import BottomNavigation from './BottomNavigation'
 import Drawer from './Drawer'
 
-interface Layout {
+import type { PropsFromSelector } from './layoutSelector'
+
+interface Layout extends PropsFromSelector {
   children: React.ReactNode
-  handleSnackbarOpen: (open: boolean) => void
+  handleSnackbarClose: () => void
   isOpenSnackbar: boolean
   muiTheme: Theme
 }
 
 const LayoutView = ({
   children,
-  handleSnackbarOpen,
+  handleSnackbarClose,
   isOpenSnackbar,
+  messageSnackbar,
   muiTheme,
 }: Layout) => (
   <ThemeProvider theme={muiTheme}>
@@ -50,7 +53,12 @@ const LayoutView = ({
         </Box>
       </Box>
       <BottomNavigation />
-      <Snackbar isOpen={isOpenSnackbar} message="Some message" isAutohide onClose={() => handleSnackbarOpen(false)} />
+      <Snackbar
+        isOpen={isOpenSnackbar}
+        message={messageSnackbar}
+        isAutohide
+        onClose={handleSnackbarClose}
+      />
     </Box>
   </ThemeProvider>
 )

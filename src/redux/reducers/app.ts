@@ -15,3 +15,8 @@ export default createReducer(INITIAL_STATE, {
     state.theme = action.payload
   },
 })
+
+export const appThemeSet = (theme: AppInitialState['theme']) => ({
+  type: APP_THEME_SET,
+  payload: theme,
+})

@@ -37,3 +37,15 @@ export default createReducer(INITIAL_STATE, {
     state.data = action.payload
   },
 })
+
+export const commentFetch = (postId: number) => ({
+  type: COMMENT_FETCH,
+  payload: postId,
+})
+export const commentFetchFailure = () => ({
+  type: COMMENT_FETCH_FAILURE,
+})
+export const commentFetchSuccess = (data: Comment[]) => ({
+  type: COMMENT_FETCH_SUCCESS,
+  payload: data,
+})

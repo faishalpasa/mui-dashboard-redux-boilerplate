@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
-import { commentFetch } from 'redux/actions/comment'
-import { snackbarOpenSet } from 'redux/actions/snackbar'
+import { commentFetch } from 'redux/reducers/comment'
 
 import { homeSelector } from './homeSelector'
 import HomeView from './HomeView'
@@ -13,7 +12,6 @@ const HomeContainer = () => {
 
   useEffect(() => {
     dispatch(commentFetch(1))
-    dispatch(snackbarOpenSet(true))
   }, [dispatch])
 
   const text = 'This is home'

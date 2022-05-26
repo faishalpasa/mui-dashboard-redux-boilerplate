@@ -3,8 +3,8 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import { createTheme } from '@mui/material/styles'
 
 import { getItem } from 'utils/localStorage'
-import { appThemeSet } from 'redux/actions/app'
-import { snackbarOpenSet } from 'redux/actions/snackbar'
+import { appThemeSet } from 'redux/reducers/app'
+import { snackbarClose } from 'redux/reducers/snackbar'
 import { lightTheme, darkTheme } from 'styles/theme'
 
 import { layoutSelector } from './layoutSelector'
@@ -29,8 +29,8 @@ const LayoutContainer = ({ children }: LayoutContainerProps) => {
     [themeColor],
   )
 
-  const handleSnackbarOpen = (open: boolean) => {
-    dispatch(snackbarOpenSet(open))
+  const handleSnackbarClose = () => {
+    dispatch(snackbarClose())
   }
 
   useEffect(() => {
@@ -41,8 +41,9 @@ const LayoutContainer = ({ children }: LayoutContainerProps) => {
   }, [dispatch])
 
   const viewProps = {
+    ...layoutState,
     children,
-    handleSnackbarOpen,
+    handleSnackbarClose,
     isOpenSnackbar,
     muiTheme,
   }

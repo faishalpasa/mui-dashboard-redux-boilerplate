@@ -22,7 +22,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 
 import config from 'config'
-import { appThemeSet } from 'redux/actions/app'
+import { appThemeSet } from 'redux/reducers/app'
 import { acronym } from 'utils/string'
 import { setItem } from 'utils/localStorage'
 
