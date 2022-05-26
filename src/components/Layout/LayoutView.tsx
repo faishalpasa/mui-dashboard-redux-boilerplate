@@ -14,14 +14,14 @@ import Drawer from './Drawer'
 interface Layout {
   children: React.ReactNode
   handleSnackbarOpen: (open: boolean) => void
-  isSnackbarOpen: boolean
+  isOpenSnackbar: boolean
   muiTheme: Theme
 }
 
 const LayoutView = ({
   children,
   handleSnackbarOpen,
-  isSnackbarOpen,
+  isOpenSnackbar,
   muiTheme,
 }: Layout) => (
   <ThemeProvider theme={muiTheme}>
@@ -50,7 +50,7 @@ const LayoutView = ({
         </Box>
       </Box>
       <BottomNavigation />
-      <Snackbar isOpen={isSnackbarOpen} message="Some message" isAutohide onClose={() => handleSnackbarOpen(false)} />
+      <Snackbar isOpen={isOpenSnackbar} message="Some message" isAutohide onClose={() => handleSnackbarOpen(false)} />
     </Box>
   </ThemeProvider>
 )

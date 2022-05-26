@@ -1,21 +1,29 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
-import { snackbarOpenSet } from 'store/actions/snackbarAction'
-import { StateContext } from 'store/StoreProvider'
+import { commentFetch } from 'redux/actions/comment'
+import { snackbarOpenSet } from 'redux/actions/snackbar'
 
+import { homeSelector } from './homeSelector'
 import HomeView from './HomeView'
 
 const HomeContainer = () => {
-  const { state, dispatch } = useContext(StateContext)
-  const { snackbar: { isOpen } } = state
+  const dispatch = useDispatch()
+  const homeState = useSelector(homeSelector, shallowEqual)
 
   useEffect(() => {
-    if (!isOpen) {
-      dispatch(snackbarOpenSet(true))
-    }
+    dispatch(commentFetch(1))
+    dispatch(snackbarOpenSet(true))
   }, [dispatch])
 
-  return <HomeView />
+  const text = 'This is home'
+
+  const viewProps = {
+    ...homeState,
+    text,
+  }
+
+  return <HomeView {...viewProps} />
 }
 
 export default HomeContainer

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import {
   AppBar,
   Avatar,
@@ -21,19 +22,19 @@ import {
 import { useNavigate } from 'react-router-dom'
 
 import config from 'config'
-import useDispatchContext from 'hooks/useDistpatchContext'
-import useStateContext from 'hooks/useStateContext'
-import { appThemeSet } from 'store/actions/appAction'
+import { appThemeSet } from 'redux/actions/app'
 import { acronym } from 'utils/string'
 import { setItem } from 'utils/localStorage'
 
+import { appBarSelector } from './appBarSelector'
+
 const AppBarView = () => {
   const [anchorMenuEl, setAnchorMenuEl] = useState<null | HTMLElement>(null)
-  const dispatch = useDispatchContext()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { app } = useStateContext()
+  const appBarState = useSelector(appBarSelector, shallowEqual)
 
-  const { theme: themeColor } = app
+  const { theme: themeColor } = appBarState
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorMenuEl(event.currentTarget)
